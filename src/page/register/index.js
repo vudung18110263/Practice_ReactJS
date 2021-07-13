@@ -1,16 +1,18 @@
 import '../login/login.css';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import React, { useEffect, useState } from 'react';
-import {RegisterUser} from '../../store/user'
+import {registerUser} from '../../store/user'
 
 function Register(){
     const dispatch = useDispatch()
     //const { user } = useSelector(state => state.user)
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    console.log("alo")
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(RegisterUser(username, password));
+        console.log("alo",username,password)
+        dispatch(registerUser(username, password));
     }
     return(
         <div id="register">
@@ -23,11 +25,13 @@ function Register(){
                                 <h3 className="text-center text-info">Register</h3>
                                 <div className="form-group">
                                     <label htmlFor="username" className="text-info">Username:</label><br/>
-                                    <input type="text" name="username" id="username" className="form-control" onChange={(e) => setUsername(e.target.value.toString())}/>
+                                    <input type="text" name="username" id="username" className="form-control" 
+                                    onChange={(e) => setUsername(e.target.value)}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password" className="text-info">Password:</label><br/>
-                                    <input type="text" name="password" id="password" className="form-control" onChange={(e) => {setPassword(e.target.value.toString()); console.log(username)}}/>
+                                    <input type="text" name="password" id="password" className="form-control" 
+                                    onChange={(e) => setPassword(e.target.value) }/>
                                 </div>
                                 <div className="form-group">
                                     <input type="submit" name="submit" className="btn btn-info btn-md" value="submit"/>
@@ -41,4 +45,4 @@ function Register(){
     );
 }
 
-export default Register
+export default Register;
