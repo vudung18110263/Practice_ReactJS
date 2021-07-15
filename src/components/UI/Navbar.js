@@ -1,10 +1,11 @@
 import {
     Link
   } from "react-router-dom";
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import {logoutUser} from '../../store/user'
 function Navbar(){
     const dispatch = useDispatch()
+    const {user} = useSelector(state=> state.user)
     const handleLogout = ()=>{
         dispatch(logoutUser())
     }
@@ -17,11 +18,13 @@ function Navbar(){
             <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <Link to="/register" className="nav-link">Detail</Link>
+                    <Link to="/" className="nav-link">Detail</Link>
                 </li>
+                {user ==="admin" ? 
                 <li className="nav-item">
                     <Link to="/findUser" className="nav-link">Find User</Link>
                 </li>
+                : <></>}
                 </ul>
             </div>
             <span className="navbar-text">

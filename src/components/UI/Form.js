@@ -1,25 +1,20 @@
 import "../../page/login/login.css";
 import {useDispatch,useSelector} from 'react-redux'
-import React, { useEffect, useState } from 'react';
-import {loginUser,updateUser} from '../../store/user'
-import {
-    Redirect,
-    Link
-  } from "react-router-dom";
+import React, {  useState } from 'react';
+import {updateUser,findUsers} from '../../store/user'
 function Form(props) {
     const dispatch = useDispatch()
-    const { islogin,user } = useSelector(state => state.user)
-    const [username, setUsername] = useState('')
+    const { user } = useSelector(state => state.user)
     const [password, setPassword] = useState('')
     const [offset, setOfset] = useState(0)
     const [limit, setLimit] = useState(0)
     const handleSubmitUpdateUser = event => {
         event.preventDefault();
         dispatch(updateUser(user, password));
-
     }
     const handleSubmitFindUser = event =>{
         event.preventDefault();
+        dispatch(findUsers(user,offset,limit))
     }
     return( 
         <div id="login">
@@ -30,7 +25,7 @@ function Form(props) {
                         <div id="login-box" className="col-md-12">
                             {props.Name==="Change Password" ? 
 
-                                <form id="login-form" className="form" className="form" onSubmit={(e)=>handleSubmitUpdateUser(e)}>
+                                <form id="login-form" className="form"  onSubmit={(e)=>handleSubmitUpdateUser(e)}>
                                     <h3 className="text-center text-info">{props.name}</h3>
                                     <div className="form-group">
                                         <label htmlFor="username" className="text-info">Username:</label><br/>
@@ -50,7 +45,7 @@ function Form(props) {
 
                             :props.Name==="Find Users" ?
                             
-                                <form id="login-form" className="form" className="form" onSubmit={(e)=>handleSubmitFindUser(e)}>
+                                <form id="login-form" className="form" onSubmit={(e)=>handleSubmitFindUser(e)}>
                                     <h3 className="text-center text-info">{props.name}</h3>
                                     <div className="form-group">
                                         <label htmlFor="username" className="text-info">Offset</label><br/>

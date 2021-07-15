@@ -1,6 +1,6 @@
 import "./login.css";
 import {useDispatch,useSelector} from 'react-redux'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {loginUser} from '../../store/user'
 import {
     Redirect,
@@ -8,18 +8,13 @@ import {
   } from "react-router-dom";
 function Login() {
     const dispatch = useDispatch()
-    // const  islogin = localStorage.getItem('islogin')
-    // console.log(islogin)
     const {isLogin} = useSelector(state=>state.user)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const handleSubmit = event => {
-        console.log(username,password)
         event.preventDefault();
         dispatch(loginUser(username, password));
     }
-    useEffect(() =>{
-    },[isLogin])
     if (isLogin){
         return(
             <Redirect to="/"/>
@@ -33,7 +28,7 @@ function Login() {
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">
-                                <form id="login-form" className="form" className="form" onSubmit={(e)=>handleSubmit(e)}>
+                                <form id="login-form" className="form" onSubmit={(e)=>handleSubmit(e)}>
                                     <h3 className="text-center text-info">Login</h3>
                                     <div className="form-group">
                                         <label htmlFor="username" className="text-info">Username:</label><br/>
