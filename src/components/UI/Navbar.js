@@ -10,6 +10,7 @@ function Navbar(){
         dispatch(logoutUser())
     }
     return(
+        <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light navbar navbar-dark bg-dark">
              <Link to="/" className="navbar-brand">ReactJS</Link> 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,15 +23,24 @@ function Navbar(){
                 </li>
                 {user ==="admin" ? 
                 <li className="nav-item">
-                    <Link to="/findUser" className="nav-link">Find User</Link>
+                    <Link to="/findUser" className="nav-link">Users</Link>
                 </li>
                 : <></>}
                 </ul>
             </div>
-            <span className="navbar-text">
-                <button onClick={(e)=> handleLogout()}>log out</button>
-            </span>
+            {user ==="admin" ? 
+                <form className="form-inline my-2 my-lg-0">
+                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <button className="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Search</button>
+                    <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e)=> handleLogout()}>log out</button>
+                </form>
+                : 
+                <form className="form-inline my-2 my-lg-0">
+                    <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e)=> handleLogout()}>log out</button>
+                </form>
+            }
         </nav>
+        </>
     );
 }
 export default Navbar 

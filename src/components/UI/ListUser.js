@@ -1,8 +1,11 @@
 import {useDispatch,useSelector} from 'react-redux'
+import React from 'react';
 import {deleteUser} from '../../store/user'
 function ListUsers (){
     const dispatch = useDispatch()
     const {listUsers} = useSelector(state => state.user)
+
+    
     return(
         <>
         <br/>
@@ -12,7 +15,21 @@ function ListUsers (){
         </div>
         <div className="col-md-6">
             <ul className="list-group">
-                <li className="list-group-item active">Users List</li>
+                {listUsers == null ? <></> :
+                    <li className="list-group-item active">
+                        <div className="row">
+                            <div className="col-md-5">
+                                username
+                            </div>
+                            <div className="col-md-5">
+                                password
+                            </div>
+                            <div className="col-md-2">
+                                
+                            </div>
+                        </div>
+                    </li>
+                }
                 {listUsers == null ? <></> : listUsers.map( (item,index) =>{
                     return (
                         <li className="list-group-item" key={index}>

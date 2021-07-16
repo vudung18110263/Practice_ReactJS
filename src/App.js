@@ -2,7 +2,9 @@
 import Login from './page/login'
 import Register from './page/register'
 import IndexPage from'./page/index'
-import FindUserPage from './page/index/findUser'
+import UsersPage from './page/index/users'
+import UserManagerPage from './page/index/UserManagerPage'
+import NavBar from './components/NavBar/NavBar.js'
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,11 +14,13 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <NavBar/>
         <Switch>
           <Route path="/" exact><IndexPage/></Route>
-          <Route path="/login" exact><Login/> </Route>
-          <Route path="/findUser" exact><FindUserPage/> </Route>
+          <Route path="/login" exact><Login/></Route>
+          <Route path="/findUser" exact><UsersPage/> </Route>
           <Route path="/register" exact><Register/></Route>
+          <Route path="/usermanager" ><UserManagerPage/></Route>
         </Switch>
       </Router>
     </div>
