@@ -15,11 +15,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 // import MailIcon from '@material-ui/icons/Mail';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import {grayColor, whiteColor, hexToRgb, blackColor} from '../../assets/material-dashboard-react';
 import { useHistory } from 'react-router-dom';
 
-import {logoutUser} from '../../store/user'
+import {logoutUser,findUser} from '../../store/user'
 
 const useStyles = makeStyles((theme) => ({
   appBar:{
@@ -110,10 +109,10 @@ export default function PrimarySearchAppBar() {
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [ setMobileMoreAnchorEl] = React.useState(null);
   const [searchKey, setSearchKey] = React.useState("");
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
 
   const handleSearchKeyChange = (e)=>{
@@ -127,18 +126,24 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+  // const handleMobileMenuClose = () => {
+  //   setMobileMoreAnchorEl(null);
+  // };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    //handleMobileMenuClose();
   };
+  const keyPress=(e)=>{
+    if(e.keyCode == 13){
+      dispatch(findUser(e.target.value))
+      routeChange("/detail?name="+e.target.value)
+   }
+  }
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
 
   const handleLogout = ()=>{
     dispatch(logoutUser())
@@ -192,11 +197,11 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" className={classes.appBar} co>
+      <AppBar position="static" className={classes.appBar} >
         <Toolbar>
           <Grid container xs={8} >
             <Grid item container xs={2} justifyContent="center" alignItems="center">
-              <Grid item>
+              <Grid item xs={12}>
                 <Typography className={classes.title} variant="h6" noWrap>
                   Material-UI
                 </Typography>
@@ -211,7 +216,7 @@ export default function PrimarySearchAppBar() {
               > 
                 Detail 
                 </Button>
-              {user!="admin" ? <></> :
+              {user!=="admin" ? <></> :
               <>
                 {/* <Button 
                   className={classes.button}
@@ -223,7 +228,7 @@ export default function PrimarySearchAppBar() {
                 <Button 
                   className={classes.button}
                   color="inherit"
-                  onClick={(e)=>{routeChange("/usermanager")}}
+                  onClick={(e)=>{routeChange("/usermanager?page=1&limit=5")}}
                   > 
                   User managers 
                 </Button>
@@ -235,23 +240,30 @@ export default function PrimarySearchAppBar() {
           
           <Grid item xs={3}>
             <div className={classes.search} >
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={handleSearchKeyChange}
-              />
+              { (user==="admin" && isLogin) 
+              ? 
+              <>
+                <div className={classes.searchIcon}>
+                  <SearchIcon/>
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={handleSearchKeyChange}
+                  onKeyDown={keyPress}
+                />
+              </>
+              :<></>}
+              
             </div>
           </Grid>
-          <Grid item xs={1}>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
+          <Grid container xs={1} justifyContent="flex-end" alignItems="center">
+            <Grid item xs={6}>
+
               <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -262,7 +274,7 @@ export default function PrimarySearchAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-            </div>
+            </Grid>
           </Grid>
           
           

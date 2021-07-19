@@ -5,7 +5,8 @@ import {
   findUserByName,
   updateUserApi,
   findUsersApi,
-  deleteUserApi } from "../api/user"
+  deleteUserApi,
+  getUsersCountApi } from "../api/user"
 // Slice
 const slice = createSlice({
   name: 'user',
@@ -13,6 +14,8 @@ const slice = createSlice({
     user: localStorage.getItem('user') || null,
     isLogin: localStorage.getItem('isLogin') || false,
     listUsers: null,
+    userCount: 0,
+    userDetail:null,
   },
   reducers: {
     registerAction:(state,action) =>{
@@ -46,12 +49,26 @@ const slice = createSlice({
       const a1 = state.listUsers.slice(0, action.payload);
       const a2 = state.listUsers.slice(action.payload + 1, state.listUsers.length);
       state.listUsers = a1.concat(a2);
+    },
+    getUsersCountAction: (state, action) =>{
+      state.userCount = action.payload
+    },
+    getUserDetailAction: (state, action) =>{
+      state.userDetail = action.payload
     }
   },
 });
 
 export default slice.reducer
-const { registerAction, loginAction,logoutAction,findUsersAction,deleteAction } = slice.actions
+const { 
+  registerAction,
+  loginAction,
+  logoutAction,
+  findUsersAction,
+  deleteAction,
+  getUsersCountAction,
+  getUserDetailAction,
+} = slice.actions
 export const registerUser = (username, password) => async dispatch =>{
     if(username==='' || password==='' )
     return alert("username or password none")
@@ -87,9 +104,20 @@ export const findUser = (username) => async dispatch =>{
     return alert("username none")
   try{
     const res = await findUserByName(username)
+    if(res.status===200){
+      dispatch(getUserDetailAction(res.value))
+      return true
+    }
+    if(res.status===401){
+      dispatch(logoutAction())
+      return alert("login expired")
+    }
+    if(res.status===400){
+      return false
+    }
   }
   catch(e){
-    return alert(e.message)
+    return false
   }
 }
 export const updateUser = (username, password) => async dispatch => {
@@ -97,7 +125,7 @@ export const updateUser = (username, password) => async dispatch => {
     return alert("username or password none")
   try{
     const user = await findUserByName(username)
-    const res = await updateUserApi(user.id,username,password)
+    const res = await updateUserApi(user.value.id,username,password)
     if(res.status===200)
       return alert("successful")
     if(res.status===401){
@@ -121,13 +149,14 @@ export const logoutUser = () => async dispatch => {
 export const findUsers = (name,offset,limit) => async dispatch => {
   if(name === '' || offset <0 || limit<0) 
     return alert("fail")
-
-  
   try{
     const res = await findUsersApi(name,offset,limit)
-    if(res.status===200)
+    if(res.status===200){
+      dispatch(getUsersCount())
       dispatch(findUsersAction(res))
-    else if(res.status===401){
+      return
+    }
+    if(res.status===401){
       dispatch(logoutAction())
       return alert("login expired")
     }
@@ -144,6 +173,7 @@ export const deleteUser = (id,index) => async dispatch => {
   try {
     const res = await deleteUserApi(id)
     if(res.status ===200){
+      getUsersCount()
       dispatch(deleteAction(index))
     }
     else if(res.status===401){
@@ -155,5 +185,25 @@ export const deleteUser = (id,index) => async dispatch => {
   }
   catch(e) {
     return alert("error")
+  }
+}
+export const getUsersCount = () =>async dispatch =>{
+  const res = await getUsersCountApi()
+  try{
+    if(res.status===200){
+      console.log("resCount",res)
+      dispatch(getUsersCountAction(res.value))
+      return
+    }
+    if(res.status===401){
+      dispatch(logoutAction())
+      return alert("login expired")
+    }
+    if(res.status===400){
+      return alert("bad request")
+    }
+  }
+  catch(e){
+    return alert("err")
   }
 }

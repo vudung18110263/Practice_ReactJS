@@ -8,7 +8,7 @@ import {
   grayColor,
   defaultFont,
 } from "./material-dashboard-react";
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const tableStyle = makeStyles((theme) => ({
   warningTableHeader: {

@@ -52,7 +52,10 @@ export const findUserByName = (name) => {
     })
     .then((response)=>{
         return response.json().then(value=>{
-            return value
+            return ({
+                value,
+                status: response.status,
+            })
         });
     })
 }
@@ -121,12 +124,31 @@ export const deleteUserApi = (id)=>{
         })
     })
 }
+export const getUsersCountApi = () => {
+    const token = localStorage.getItem('token')
+    return fetch(host+"/account/count", {
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer '+token,
+        },
+    })
+    .then ((response) => {
+        return response.json().then(value =>{
+           return ({
+                value,
+                status: response.status,
+           })
+        })
+    })
+
+}
 const api={
     registerApi,
     loginApi,
     findUserByName,
     updateUserApi,
     findUsersApi,
-    deleteUserApi
+    deleteUserApi,
+    getUsersCountApi
 }
 export default api

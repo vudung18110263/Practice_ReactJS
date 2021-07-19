@@ -5,6 +5,7 @@ import IndexPage from'./page/index'
 import UsersPage from './page/index/users'
 import UserManagerPage from './page/index/UserManagerPage'
 import NavBar from './components/NavBar/NavBar.js'
+import DetailUser from './page/detailUser/detailUser'
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +22,7 @@ function App() {
           <Route path="/findUser" exact><UsersPage/> </Route>
           <Route path="/register" exact><Register/></Route>
           <Route path="/usermanager" ><UserManagerPage/></Route>
+          <Route path="/detail"><DetailUser/></Route>
         </Switch>
       </Router>
     </div>

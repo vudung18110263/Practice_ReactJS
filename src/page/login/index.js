@@ -23,12 +23,12 @@ function Login() {
     else
         return( 
             <div id="login">
-                <h3 className="text-center text-white pt-5">Login form</h3>
+                <h3 className="text-center text-white pt-5"></h3>
                 <div id="login-row" className="row justify-content-center align-items-center">
                     <div id="login-column" className="col-md-5">
                         <div id="login-box" className="col-md-12">
                             <form id="login-form" className="form" onSubmit={(e)=>handleSubmit(e)}>
-                                <h3 className="text-center text-info">Login</h3>
+                                <h3 className="text-center text-info text-white">Login</h3>
                                 <div className="form-group">
                                     <label htmlFor="username" className="text-info">Username:</label><br/>
                                     <input type="text" name="username" id="username" className="form-control"
@@ -41,7 +41,7 @@ function Login() {
                                 </div>
                                 <div className="form-group">
                                 
-                                    <input type="submit" name="submit" className="btn btn-info btn-md" value="submit"/>
+                                    <input type="submit" name="submit" className="btn btn-info btn-md submit" value="submit"/>
                                 </div>
                                 <div id="register-link" className="text-right">
                                     <br/>

@@ -2,20 +2,31 @@ body {
     margin: 0;
     padding: 0;
     background-color: #AAAAAA;
-    height: 100vh;
-  }
-  #login  #login-row #login-column #login-box,
-  #register  #login-row #login-column #login-box {
-    margin-top: 60px;
-    height: auto;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-  }
-  #login  #login-row #login-column #login-box #login-form ,
-  #register  #login-row #login-column #login-box #login-form{
-    padding: 20px;
-  }
-  #login  #login-row #login-column #login-box #login-form #register-link,
-  #register  #login-row #login-column #login-box #login-form #register-link {
-    margin-top: -85px;
-  }
+}
+#login  #login-row #login-column #login-box,
+#register  #login-row #login-column #login-box {
+  margin-top: 60px;
+  height: auto;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#login  #login-row #login-column #login-box #login-form ,
+#register  #login-row #login-column #login-box #login-form{
+  padding: 20px;
+}
+#login  #login-row #login-column #login-box #login-form #register-link,
+#register  #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+#login form h3,
+#register form h3,
+.form-group label,
+#register-link a
+{
+  color: #3C4858 !important;
+}
+.form-group .submit{
+  color: white !important;
+  background-color:#3C4858 !important;
+}
